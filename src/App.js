@@ -4,6 +4,7 @@ import './App.css';
 class App extends Component {
     state = {
         gameData: []
+
     }
 
     eachRegion = () => {
@@ -12,7 +13,7 @@ class App extends Component {
 
     componentDidMount() {
         this.initiateGame();
-
+        this.createSectors();
     }
 
     render() {
@@ -21,7 +22,7 @@ class App extends Component {
                 <header className="App-header">
 
                     <div id="Sudoku-Container">
-                        {this.state.gameData.map(this.eachRegion)}
+
                     </div>
 
                 </header>
@@ -49,8 +50,8 @@ class App extends Component {
             for (let col = 0; col < gameData[row].length; col++) {
                 let num = this.getNoConflictNumber(row, col)
                 if (num === 0) {
-                    this.state.gameData.splice(row, 1, [0,0,0,0,0,0,0,0,0])
-                    col=0
+                    this.state.gameData.splice(row, 1, [0, 0, 0, 0, 0, 0, 0, 0, 0])
+                    col = 0
                     row--
                     break
                 } else {
@@ -67,19 +68,25 @@ class App extends Component {
 
     isConflict = (row, col, num) => {
         let {gameData} = this.state;
-        return gameData[row].includes(num) || Array.from(gameData.map(r => r[col])).includes(num)
+        let sectorNums = []
+
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                sectorNums.push(gameData[(Math.floor(row / 3) * 3) + i][(Math.floor(col / 3) * 3) + j])
+            }
+        }
+        console.log(sectorNums)
+        return gameData[row].includes(num) || Array.from(gameData.map(r => r[col])).includes(num) || sectorNums.includes(num)
     }
 
     getNoConflictNumber(row, col) {
         let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         let num = numbers.splice(this.getRandomInt(numbers.length), 1)
-        console.log('Numbers: ' + numbers)
-        console.log('Number: ' + num[0] + " Row: " + row + " Col: " + col + ' Conflict: ' + this.isConflict(row, col, num[0]))
+
         while (this.isConflict(row, col, num[0])) {
             if (numbers.length > 0) {
                 num = numbers.splice(this.getRandomInt(numbers.length), 1)
-                console.log('Numbers: ' + numbers)
-                console.log('Number: ' + num[0] + " Row: " + row + " Col: " + col + ' Conflict: ' + this.isConflict(row, col, num[0]))
+
             } else {
                 num = [0]
                 break
