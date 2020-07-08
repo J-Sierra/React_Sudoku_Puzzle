@@ -1,0 +1,10 @@
+.regions{
+    background-color: lightgray;
+    width: 172px ;
+    height: 172px;
+    position: relative;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}

@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+#Sudoku-Container {
+  width: 528px ;
+  height: 528px;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
