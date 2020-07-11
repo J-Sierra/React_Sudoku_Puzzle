@@ -2,20 +2,17 @@ import React, {Component} from 'react';
 import "./styles/cell.css"
 
 class Cell extends Component {
-    state={
+    state = {
         backgroundColor: "white",
-        row:0,
-        column:0,
-        region:0
+
     }
 
-    handleClick=()=>{
+    handleClick = () => {
         if (this.state.backgroundColor === "white") {
             this.setState({
-                 backgroundColor: "red"
+                backgroundColor: "red"
             });
-        }
-        else {
+        } else {
             this.setState({
                 backgroundColor: "white"
             })
@@ -23,9 +20,16 @@ class Cell extends Component {
     }
 
     render() {
+        let {cell} = this.props
+        let cellData = cell[0]
+        let row = cell[1]
+        let col = cell[2]
+
         return (
-            <div className="cell" onClick={()=>{this.handleClick()}} style={{backgroundColor: this.state.backgroundColor}}>
-                {this.props.cNumber}
+            <div className="cell" onClick={() => {
+                this.handleClick()
+            }} style={{backgroundColor: this.state.backgroundColor}}>
+                {cellData ? cellData : null}
             </div>
         );
     }
