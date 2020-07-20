@@ -12,6 +12,7 @@ class App extends Component {
 
     componentDidMount() {
         this.initiateGame();
+        this.setDifficulty(36);
         this.createSectors();
         this.setState({gameBoardReady: true})
     }
@@ -120,6 +121,21 @@ class App extends Component {
             })
         ))
         console.log(sectors)
+    }
+
+    setDifficulty(difficulty) {
+        let {gameBoard} = this.state;
+        let randRow = null;
+        let randCol = null;
+        for (let i = 0; i < difficulty; i++) {
+            randRow = this.getRandomInt(9);
+            randCol = this.getRandomInt(9);
+            if (gameBoard[randRow][randCol]) {
+                gameBoard[randRow].splice(randCol, 1, null)
+            } else{
+                i--
+            }
+        }
     }
 }
 
