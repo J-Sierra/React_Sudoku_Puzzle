@@ -1,22 +1,20 @@
-import React, {Component} from 'react';
-import "./styles/regions.css"
+import React from 'react';
+import "./styles/sector.scss"
 import Cell from "./cell";
 
-class Sector extends Component {
+function Sector(props) {
 
-    render() {
-        let {sector} = this.props
+        let {sector} = props
         return (
-            <div className="regions">
+            <div className="sectors">
                 {sector.map((cell, key) =>
                     <Cell
                         cell={cell}
-                        key={key}
+                        key={key*Math.random()}
                     />
                 )}
             </div>
         );
-    }
 
 }
 

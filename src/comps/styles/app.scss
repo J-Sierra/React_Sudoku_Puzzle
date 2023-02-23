@@ -1,0 +1,36 @@
+ @mixin flex($direction: column, $justify: center, $align: center){
+   display: flex;
+   flex-direction: $direction;
+   justify-content: $justify;
+   align-items: $align;
+ }
+
+.App {
+  text-align: center;
+  background-color: white;
+}
+
+.App-Container {
+  @include flex();
+  background-color: #303052;
+  min-height: 100vh;
+  font-size: xx-large;
+  color: white;
+
+
+  header{
+    font-family: 'Staatliches', cursive;
+    font-size: 150px;
+    margin-bottom: 20px;
+    text-shadow: 13px 13px 6px black;
+  }
+}
+
+#Sudoku-Container {
+  @include flex(row);
+  width: 528px ;
+  height: 528px;
+  background-color: white;
+  flex-wrap: wrap;
+  box-shadow: 7px 7px 20px 2px black;
+}

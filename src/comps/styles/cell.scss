@@ -1,0 +1,29 @@
+.cell{
+    border: 1px solid black;
+    width: calc(166px/3);
+    height: calc(166px/3);
+    color: #000000;
+}
+::placeholder{
+    color: black;
+}
+.boldCell{
+    border: 1px solid black;
+    width: calc(166px/3);
+    height: calc(166px/3);
+    color: #000000;
+    font-weight: bold;
+}
+#cellInput{
+    outline: none;
+    border: solid 0 #fff;
+    text-align: center;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    font-size: 25px;
+    color: transparent;
+    text-shadow: 0 0 0 black;
+
+}

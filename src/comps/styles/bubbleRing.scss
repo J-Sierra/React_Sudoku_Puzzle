@@ -1,0 +1,39 @@
+@mixin on-circle($item-count, $circle-size, $item-size) {
+
+  > * {
+    &:hover {
+      width: $item-size*1.1;
+      height: $item-size*1.1;
+    }
+
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: $item-size;
+    height: $item-size;
+    margin: -($item-size / 2);
+
+    $angle: (360 / $item-count);
+    $rot: 125.5;
+
+    @for $i from 1 through $item-count {
+      &:nth-of-type(#{$i}) {
+        transform: rotate($rot * 1deg) translate($circle-size / 2) rotate($rot * -1deg);
+      }
+
+      $rot: $rot + $angle;
+    }
+
+  }
+
+}
+
+#BubbleRing {
+  @include on-circle($item-count: 10, $circle-size: 100px, $item-size: 20px);
+  top: -32px;
+  left: -2px;
+  position: relative;
+  z-index: 10;
+}
+
