@@ -100,63 +100,56 @@ class App extends Component {
     return num;
   }
 
-  numberConflicts = (row, col, num) => {
-    const { gameBoard } = this.props;
-    //Placeholder array for the numbers contained withing a sector
-    let sectorNumbers = [];
-    //Calculates the numbers within the sector that the current number resides in and
-    //stores them within an array
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {
-        sectorNumbers.push(
-          gameBoard[Math.floor(row / 3) * 3 + i][Math.floor(col / 3) * 3 + j]
-        );
-      }
-    }
+  // This function takes in a row, column, and number and checks if that number conflicts
+  // with the current board in its row, column, or sector.
 
-    //Checks if the 'num' is present in its row, column, or sector and returns the boolean result
+  numberConflicts = (row, col, num) => {
+    // Destructure the gameBoard object from the props passed to this component.
+    const { gameBoard } = this.props;
+
+    // Calculate the sector that the current number resides in and store all numbers in the sector.
+    const sectorNumbers = gameBoard
+      .slice(Math.floor(row / 3) * 3, Math.floor(row / 3) * 3 + 3) // get the rows in the sector
+      .flatMap((r) =>
+        r.slice(Math.floor(col / 3) * 3, Math.floor(col / 3) * 3 + 3)
+      ); // get the numbers in the sector
+
+    // Check if the number is present in its row, column, or sector and return the boolean result.
     return (
       gameBoard[row].includes(num) ||
-      Array.from(gameBoard.map((r) => r[col])).includes(num) ||
+      gameBoard.map((r) => r[col]).includes(num) ||
       sectorNumbers.includes(num)
     );
   };
 
   createSectors() {
+    // Destructure the gameBoard and sectors from the props
     const { gameBoard, sectors } = this.props;
 
-    let sectorRow = null;
-    let sectorCol = null;
+    // Loop through each cell in the game board
+    for (let row = 0; row < 9; row++) {
+      for (let col = 0; col < 9; col++) {
+        // Calculate the sector row and column for the current cell
+        const sectorRow = Math.floor(col / 3) + Math.floor(row / 3) * 3;
+        const sectorCol = (col % 3) + (row % 3) * 3;
 
-    //Calculates the numbers in each sector and retrieves them each row and column and saves them
-    //in order in an array for each sector
-    gameBoard.map((gameBoardRow, row) =>
-      gameBoardRow.map((cell, col) => {
-        sectorRow = Math.floor(col / 3) + Math.floor(row / 3) * 3;
-        sectorCol = (col % 3) + (row % 3) * 3;
-        if (cell === null) {
-          return sectors[sectorRow].push({
-            number: cell,
-            sectorRow: sectorRow,
-            sectorCol: sectorCol,
-            row: row,
-            col: col,
-            selected: false,
-            editable: true,
-          });
-        }
-        return sectors[sectorRow].push({
-          number: cell,
-          sectorRow: sectorRow,
-          sectorCol: sectorCol,
-          row: row,
-          col: col,
+        // Get the value of the current cell
+        const cellNumber = gameBoard[row][col];
+
+        // Create a new object representing the current cell, and add it to the correct sector in the sectors array
+        sectors[sectorRow].push({
+          number: cellNumber,
+          sectorRow,
+          sectorCol,
+          row,
+          col,
           selected: false,
-          editable: false,
+          editable: cellNumber === null,
         });
-      })
-    );
+      }
+    }
 
+    // Log the sectors array to the console for debugging purposes
     console.log("This is the sectors array", sectors);
   }
 
