@@ -1,16 +1,31 @@
-import React from 'react';
-import './styles/numberBubble.scss';
-import { useDispatch } from 'react-redux'
+import React, { Component } from "react";
+import "./styles/numberBubble.scss";
+import { connect } from "react-redux";
+import { onCellChange } from "./redux/actions/actions";
 
+class NumberBubble extends Component {
+  componentDidMount() {
+    //console.log(this.props.cell);
+  }
 
-function NumberBubble(props) {
-    let {number} = props;
+  render() {
+    const { cell, number, changeCellNumberFromInput } = this.props;
+    //console.log(this.props);
     return (
-        <div className='NumberBubble'>
-            <div>{number}</div>
+      <div className="NumberBubble">
+        <div onClick={() => changeCellNumberFromInput(number, cell)}>
+          {number === null ? "x" : number}
         </div>
+      </div>
     );
-
+  }
 }
 
-export default NumberBubble
+function mapActionsToProps(dispatch) {
+  return {
+    changeCellNumberFromInput: (value, cell) =>
+      dispatch(onCellChange(value, cell)),
+  };
+}
+
+export default connect(null, mapActionsToProps)(NumberBubble);

@@ -1,82 +1,56 @@
 import React, { Component } from "react";
 import "./styles/cell.scss";
-import { onCellChange, onCellSelected } from "./redux/actions/actions";
 import { connect } from "react-redux";
 import BubbleRing from "./bubbleRing";
 
 class Cell extends Component {
   state = {
-    editable: true,
     editing: false,
     selected: false,
   };
 
   componentDidMount() {
-    if (this.props.cell.number) {
-      this.setState({
-        ...this.state,
-        editable: false,
-      });
-    }
+    // Add event listener to hide BubbleRing when clicking outside the cell
+    document.addEventListener("click", this.handleOutsideClick);
   }
 
+  componentWillUnmount() {
+    // Remove event listener when component unmounts
+    document.removeEventListener("click", this.handleOutsideClick);
+  }
+
+  handleOutsideClick = (event) => {
+    const { target } = event;
+    const { editing } = this.state;
+    const isClickInsideCell = this.cellRef.contains(target);
+    if (editing && !isClickInsideCell) {
+      this.setState({ editing: false });
+    }
+  };
+
   render() {
-    let { cell } = this.props;
-    let { selected } = cell;
-    let { editing, editable } = this.state;
-    let cellData = cell.number;
+    const { editable, number } = this.props.cell;
+    const { selected, editing } = this.state;
 
     return (
       <div
+        ref={(el) => (this.cellRef = el)} // Save a reference to the cell div
         className={editable ? "cell" : "boldCell"}
-        //style={cellSelected ? {backgroundColor: "lightblue"} : null}
         style={selected ? { backgroundColor: "gray" } : null}
-        onClick={this.selectCell}
-        onBlur={this.toggle}
+        onClick={this.toggle}
       >
-        {!editing ? (
-          cellData ? (
-            cellData
-          ) : null
-        ) : (
-          <>
-            <input
-              id={"cellInput"}
-              type="text"
-              autoComplete={"off"}
-              autoFocus={true}
-              maxLength={1}
-              onChange={this.handleOnChange}
-              placeholder={cellData}
-            />
-            <BubbleRing cell={cell} cellChange={this.handleOnChange} />
-          </>
-        )}
+        {!editing ? number ? number : null : <div id={"cellInput"} />}
+        {editing && <BubbleRing cell={this.props.cell} />}
       </div>
     );
   }
 
-  selectCell = () => {
-    let { cellSelected, cell } = this.props;
-    this.toggle();
-    cellSelected(cell);
-  };
-
   toggle = () => {
-    let { editable, editing } = this.state;
+    const { editing, selected } = this.state;
 
-    if (editable) this.setState({ editing: !editing });
-  };
-
-  handleOnChange = (e) => {
-    let { cellOnChange, cell } = this.props;
-    let { value } = e.target;
-
-    !isNaN(value) && value !== "0"
-      ? cellOnChange(value, cell)
-      : cellOnChange(null, cell);
-
-    this.toggle();
+    if (this.props.cell.editable) {
+      this.setState({ editing: !editing, selected: !selected });
+    }
   };
 }
 
@@ -89,11 +63,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-function mapActionsToProps() {
-  return {
-    cellOnChange: onCellChange,
-    cellSelected: onCellSelected,
-  };
-}
-
-export default connect(mapStateToProps, mapActionsToProps)(Cell);
+export default connect(mapStateToProps, null)(Cell);

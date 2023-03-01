@@ -1,61 +1,61 @@
-import {CELL_CHANGE, GAME_BOARD_READY, CELL_SELECTED} from "../actions/actionTypes";
+import { CELL_CHANGE, GAME_BOARD_READY } from "../actions/actionTypes";
 
 const initialState = {
-    gameBoard: [],
-    sectors: [],
-    gameBoardReady: false
+  gameBoard: [],
+  sectors: [],
+  gameBoardReady: false,
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default function (state = initialState, {
-    type,
-    payload
-}) {
-    switch (type) {
-        case GAME_BOARD_READY: {
-            return {
-                ...state,
-                gameBoardReady: true
-            }
-        }
-        case CELL_CHANGE: {
-            let {
-                sectorRow,
-                sectorCol
-            } = payload.cell
-            let {sectors} = state
-
-            console.log(payload)
-            sectors[sectorRow][sectorCol] = {
-                ...sectors[sectorRow][sectorCol],
-                number: payload.content
-            }
-
-            return state
-
-        }
-        case CELL_SELECTED: {
-            let {
-                sectorRow,
-                sectorCol,
-                row,
-                col
-            } = payload.cell;
-            let {sectors} = state
-
-            sectors[sectorRow].forEach((cell, i) => {
-                return sectors[sectorRow][i] = {
-                    ...cell,
-                    selected: true
-                }
-            })
-            return state
-
-        }
-        default: {
-            return state
-        }
-
+export default function (state = initialState, { type, payload }) {
+  switch (type) {
+    case GAME_BOARD_READY: {
+      return {
+        ...state,
+        gameBoardReady: true,
+      };
+    }
+    case CELL_CHANGE: {
+      console.log(payload);
+      console.log(state);
+      let { cell, content } = payload;
+      let { sectorRow, sectorCol } = cell;
+      if (content === "x") {
+        return {
+          ...state,
+          sectors: [
+            ...state.sectors.slice(0, sectorRow),
+            [
+              ...state.sectors[sectorRow].slice(0, sectorCol),
+              {
+                ...state.sectors[sectorRow][sectorCol],
+                number: null,
+              },
+              ...state.sectors[sectorRow].slice(sectorCol + 1),
+            ],
+            ...state.sectors.slice(sectorRow + 1),
+          ],
+        };
+      }
+      return {
+        ...state,
+        sectors: [
+          ...state.sectors.slice(0, sectorRow),
+          [
+            ...state.sectors[sectorRow].slice(0, sectorCol),
+            {
+              ...state.sectors[sectorRow][sectorCol],
+              number: content,
+            },
+            ...state.sectors[sectorRow].slice(sectorCol + 1),
+          ],
+          ...state.sectors.slice(sectorRow + 1),
+        ],
+      };
     }
 
+    default: {
+      return state;
+    }
+  }
 }
