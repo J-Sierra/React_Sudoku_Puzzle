@@ -1,4 +1,9 @@
-import { CELL_CHANGE, CELL_SELECTED, GAME_BOARD_READY } from "./actionTypes";
+import {
+  CELL_CHANGE,
+  CELL_SELECTED,
+  GAME_BOARD_READY,
+  NEW_GAME,
+} from "./actionTypes";
 
 export const gameBoardReady = (ready) => ({
   type: GAME_BOARD_READY,
@@ -19,4 +24,8 @@ export const onCellSelected = (cell) => ({
   payload: {
     cell: cell,
   },
+});
+
+export const newGame = () => ({
+  type: NEW_GAME,
 });

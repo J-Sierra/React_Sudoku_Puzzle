@@ -32,7 +32,9 @@ class App extends Component {
               </strong>
             </div>
             <div className="navElements">
-              <div id="resumeButton">New Game</div>
+              <div onClick={this.handleNewGame()} id="resumeButton">
+                New Game
+              </div>
             </div>
           </nav>
         </header>
@@ -190,6 +192,10 @@ class App extends Component {
 
   getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
+  }
+
+  handleNewGame() {
+    return undefined;
   }
 }
 
