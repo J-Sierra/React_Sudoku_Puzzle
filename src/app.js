@@ -11,7 +11,7 @@ class App extends Component {
       this.generateNumbers();
       this.setDifficulty(60);
       this.createSectors();
-      this.props.GameBoardReady();
+      this.props.GameBoardReady(true);
     }
   }
 
@@ -19,9 +19,24 @@ class App extends Component {
     const { sectors, gameBoardReady } = this.props;
     return (
       <div className="App">
+        <header className="Header">
+          <nav className="nav">
+            <div id="logo">
+              <strong
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.location.replace("/#");
+                }}
+              >
+                Sudoku
+              </strong>
+            </div>
+            <div className="navElements">
+              <div id="resumeButton">New Game</div>
+            </div>
+          </nav>
+        </header>
         <div className="App-Container">
-          <header>Sudoku</header>
-
           <div id="Sudoku-Container">
             {gameBoardReady
               ? sectors.map((sector, key) => (
@@ -36,15 +51,16 @@ class App extends Component {
 
   //Starts the process of making the game board of 3x3 sectors each containing 3x3 of cells.
   initiateGame() {
-    //game board and sectors arrays received from the Redux store
+    // Retrieve gameBoard and sectors arrays from Redux store
     const { gameBoard, sectors } = this.props;
 
-    //game board and Sectors get populated with 9 empty arrays
+    // Populate gameBoard and sectors arrays with 9 empty sub-arrays each
     for (let i = 1; i < 10; i++) {
       gameBoard.push([]);
       sectors.push([]);
     }
-    //Each game board sector is then populated with 9 empty cells
+
+    // Populate each sub-array of gameBoard with 9 null values
     gameBoard.forEach((region) => {
       for (let i = 0; i < 9; i++) {
         region.push(null);
@@ -59,28 +75,24 @@ class App extends Component {
     //Cycles through each cell to find a number that works for Sudoku
     for (let row = 0; row < gameBoard.length; row++) {
       for (let col = 0; col < gameBoard[row].length; col++) {
-        //returns a number that is confirmed to not be present in neither the row
-        let num = this.getNoConflictNumber(row, col);
-        //If the getNoConflictNumber method returns a 0, the number does not fit in neither the row
-        //nor column. The entire row is reset to empty values, column is reset to the start
-        //of the row, and the row counter is reduced by one
-        //else, the number is non-conflicting and can be placed in the cell
+        // Get a number that doesn't conflict with existing numbers in the row, column, and sector
+        let num = this.getANoNConflictingNumber(row, col);
+        // If the number returned is 0, reset the row and restart generating numbers for the row
         if (num === 0) {
           gameBoard.splice(row, 1, [0, 0, 0, 0, 0, 0, 0, 0, 0]);
           col = 0;
           row--;
           break;
         } else {
+          // Place the non-conflicting number in the current cell of the game board
           gameBoard[row].splice(col, 1, num);
         }
       }
     }
-
-    console.log(gameBoard);
   }
 
   //Attempts to find a number that does not conflict with any other number in row, column, or sector
-  getNoConflictNumber(row, col) {
+  getANoNConflictingNumber(row, col) {
     let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     //Selects a number from the array at random and deletes it from the options
     let num = numbers.splice(this.getRandomInt(numbers.length), 1)[0];

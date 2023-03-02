@@ -1,9 +1,9 @@
- @mixin flex($direction: column, $justify: center, $align: center){
-   display: flex;
-   flex-direction: $direction;
-   justify-content: $justify;
-   align-items: $align;
- }
+@mixin flex($direction: column, $justify: center, $align: center) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
 
 .App {
   text-align: center;
@@ -12,25 +12,71 @@
 
 .App-Container {
   @include flex();
-  background-color: #303052;
+  background-color: #222222;
   min-height: 100vh;
   font-size: xx-large;
   color: white;
 
 
-  header{
-    font-family: 'Staatliches', cursive;
-    font-size: 150px;
-    margin-bottom: 20px;
-    text-shadow: 13px 13px 6px black;
-  }
 }
 
 #Sudoku-Container {
-  @include flex(row);
-  width: 528px ;
-  height: 528px;
-  background-color: white;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
+}
+
+.sectors {
+  background-color: lightgray;
+  width: 129px;
+  height: 128px;
+  position: relative;
+  border: 2px solid black;
+  display: flex;
   flex-wrap: wrap;
-  box-shadow: 7px 7px 20px 2px black;
+}
+
+.Header {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 999;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 50px 0;
+  height: 50px;
+  width: auto;
+  background-color: #222222;
+  backdrop-filter: blur(10px);
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  color: white;
+  z-index: 12;
+  height: auto;
+}
+
+.navElements {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 50px;
+}
+
+#logo {
+  color: #ffd500;
+  font-size: 55px;
+}
+
+#logo strong:hover {
+  color: white;
+  cursor: pointer;
 }

@@ -12,7 +12,7 @@ export default function (state = initialState, { type, payload }) {
     case GAME_BOARD_READY: {
       return {
         ...state,
-        gameBoardReady: true,
+        gameBoardReady: payload.ready,
       };
     }
     case CELL_CHANGE: {

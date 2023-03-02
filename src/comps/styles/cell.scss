@@ -1,9 +1,13 @@
+$size: calc(128px / 3 - .9px);
 .cell {
   border: 1px solid black;
-  width: calc(166px / 3);
-  height: calc(166px / 3);
+  width: $size;
+  height: $size;
   color: #000000;
   background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 ::placeholder {
@@ -12,13 +16,14 @@
 
 .boldCell {
   border: 1px solid black;
-  width: calc(166px / 3);
-  height: calc(166px / 3);
+  width: $size;
+  height: $size;
   color: rgb(0, 0, 0);
   font-weight: bolder;
-  background-color: white;
-
-
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #cellInput {
@@ -32,5 +37,4 @@
   font-size: 25px;
   color: transparent;
   text-shadow: 0 0 0 black;
-
 }
