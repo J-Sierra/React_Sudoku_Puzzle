@@ -1,18 +1,24 @@
-import { CELL_CHANGE, GAME_BOARD_READY } from "../actions/actionTypes";
+import {
+  CELL_CHANGE,
+  NEW_GAME,
+  SET_DIFFICULTY,
+  SET_GAME_BOARD_READY,
+} from "../actions/actionTypes";
 
 const initialState = {
   gameBoard: [],
   sectors: [],
   gameBoardReady: false,
+  difficulty: 40,
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function (state = initialState, { type, payload }) {
   switch (type) {
-    case GAME_BOARD_READY: {
+    case SET_GAME_BOARD_READY: {
       return {
         ...state,
-        gameBoardReady: payload.ready,
+        gameBoardReady: payload.value,
       };
     }
     case CELL_CHANGE: {
@@ -53,7 +59,21 @@ export default function (state = initialState, { type, payload }) {
         ],
       };
     }
-
+    case NEW_GAME: {
+      console.log("Resetting state");
+      return {
+        ...state,
+        gameBoard: [],
+        sectors: [],
+        gameBoardReady: false,
+      };
+    }
+    case SET_DIFFICULTY: {
+      return {
+        ...state,
+        difficulty: payload.difficulty,
+      };
+    }
     default: {
       return state;
     }

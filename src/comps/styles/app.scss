@@ -80,3 +80,16 @@
   color: white;
   cursor: pointer;
 }
+#newGame{
+  cursor: pointer;
+  &:hover {
+    color: #ffd500;
+  }
+}
+#gameSettingsContainer{
+  @include flex(row,flex-end);
+  flex: 2;
+  .navElements:not(:first-child){
+    margin-left: 20px;
+  }
+}

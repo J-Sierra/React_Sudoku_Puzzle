@@ -1,14 +1,15 @@
 import {
   CELL_CHANGE,
   CELL_SELECTED,
-  GAME_BOARD_READY,
+  SET_GAME_BOARD_READY,
   NEW_GAME,
+  SET_DIFFICULTY,
 } from "./actionTypes";
 
-export const gameBoardReady = (ready) => ({
-  type: GAME_BOARD_READY,
+export const setGameboardReadyStatus = (value) => ({
+  type: SET_GAME_BOARD_READY,
   payload: {
-    ready: ready,
+    value: value,
   },
 });
 export const onCellChange = (content, cell) => ({
@@ -28,4 +29,10 @@ export const onCellSelected = (cell) => ({
 
 export const newGame = () => ({
   type: NEW_GAME,
+});
+export const setDifficulty = (difficulty) => ({
+  type: SET_DIFFICULTY,
+  payload: {
+    difficulty: difficulty,
+  },
 });
