@@ -48,6 +48,7 @@
   cursor: pointer;
   font-size: calc($size / 22);
   height: 30px;
+  user-select: none;
   width: 30px;
 
   &:hover {

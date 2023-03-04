@@ -25,6 +25,7 @@ class App extends Component {
             <div id={"gameSettingsContainer"}>
               <div className="navElements">
                 <div id={"difficultySettingDropdown"}>
+                  <label> Difficulty: </label>
                   <select
                     disabled={!this.state.canClickNewGame}
                     onChange={(e) => this.props.setDifficulty(e.target.value)}

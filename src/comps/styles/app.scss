@@ -59,49 +59,81 @@ $secondaryBC: #ffd500;
   right: 0;
   width: auto;
   z-index: 999;
-}
 
-.nav {
-  align-items: center;
-  color: white;
-  display: flex;
-  height: auto;
-  justify-content: space-between;
-  position: relative;
-  width: 100%;
-  z-index: 12;
-}
-
-.navElements {
-  align-items: center;
-  column-gap: 50px;
-  display: flex;
-  justify-content: space-between;
-}
-
-#logo {
-  color: #ffd500;
-  font-size: 55px;
-}
-
-#logo strong:hover {
-  color: white;
-  cursor: pointer;
-}
-
-#newGame {
-  cursor: pointer;
-
-  &:hover {
-    color: #ffd500;
+  .nav {
+    align-items: center;
+    color: white;
+    display: flex;
+    height: auto;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+    z-index: 12;
   }
-}
 
-#gameSettingsContainer {
-  @include flex(row, flex-end);
-  flex: 2;
+  .navElements {
+    align-items: center;
+    column-gap: 50px;
+    display: flex;
+    justify-content: space-between;
+  }
 
-  .navElements:not(:first-child) {
-    margin-left: 20px;
+  #logo {
+    color: #ffd500;
+    font-size: 55px;
+  }
+
+  #logo strong:hover {
+    color: white;
+    cursor: pointer;
+  }
+
+  #newGame {
+    cursor: pointer;
+    font-size: calc($size / 25);
+
+    &:hover {
+      color: #ffd500;
+    }
+  }
+
+  #gameSettingsContainer {
+    @include flex(row, flex-end);
+    flex: 2;
+    font-size: calc($size / 25);
+
+    .navElements:not(:first-child) {
+      margin-left: 20px;
+    }
+  }
+
+  label {
+  }
+
+  select {
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid #ffffff;
+    color: white;
+    font-size: calc($size / 25);
+    padding: 0 2px;
+
+    &:hover {
+      background-color: $secondaryBC;
+      color: $primaryBC;
+    }
+  }
+
+  option {
+    align-items: center;
+    background-color: #222222;
+    color: white;
+    font-size: calc($size / 35);
+    padding: 2px;
+    text-align: center;
+
+    &:hover {
+      background-color: $secondaryBC;
+    }
   }
 }

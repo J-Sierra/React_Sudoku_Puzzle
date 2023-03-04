@@ -31,13 +31,12 @@ class Cell extends Component {
 
   render() {
     const { editable, number, notes } = this.props.cell;
-    const { selected, editing } = this.state;
+    const { editing } = this.state;
 
     return (
       <div
         ref={(el) => (this.cellRef = el)} // Save a reference to the cell div
         className={editable ? "cell" : "boldCell"}
-        style={selected ? { backgroundColor: "gray" } : null}
         onClick={this.toggle}
       >
         {!editing ? number : null}
@@ -55,10 +54,10 @@ class Cell extends Component {
   }
 
   toggle = () => {
-    const { editing, selected } = this.state;
+    const { cell } = this.props;
 
-    if (this.props.cell.editable) {
-      this.setState({ editing: !editing, selected: !selected });
+    if (cell.editable) {
+      this.setState((prevState) => ({ editing: !prevState.editing }));
     }
   };
 }

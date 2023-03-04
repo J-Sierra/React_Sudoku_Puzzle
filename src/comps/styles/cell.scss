@@ -14,6 +14,7 @@ $cellSize: calc(calc($size / 3) / 3 - 0.9px);
   height: $cellSize;
   justify-content: center;
   position: relative;
+  user-select: none;
   width: $cellSize;
 }
 
@@ -50,5 +51,11 @@ $cellSize: calc(calc($size / 3) / 3 - 0.9px);
   font-size: calc($size / 33);
   height: calc(#{$cellSize} / 3);
   justify-content: center;
+  user-select: none;
   width: calc(#{$cellSize} / 3);
+
+  &:hover {
+    background-color: lightgray;
+    color: black;
+  }
 }
