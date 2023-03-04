@@ -5,11 +5,7 @@ import { newGame, setDifficulty } from "./comps/redux/actions/actions";
 import Gameboard from "./comps/gameboard";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { gameCounter: 0, canClickNewGame: true };
-    this.handleNewGame = this.handleNewGame.bind(this);
-  }
+  state = { gameCounter: 0, canClickNewGame: true };
 
   render() {
     return (
@@ -30,6 +26,7 @@ class App extends Component {
               <div className="navElements">
                 <div id={"difficultySettingDropdown"}>
                   <select
+                    disabled={!this.state.canClickNewGame}
                     onChange={(e) => this.props.setDifficulty(e.target.value)}
                   >
                     <option value={this.getRandomIntegerWithinRange(36, 45)}>
@@ -45,7 +42,7 @@ class App extends Component {
                 </div>
               </div>
               <div className="navElements">
-                <div onClick={this.handleNewGame} id={"newGame"}>
+                <div onClick={() => this.handleNewGame()} id={"newGame"}>
                   New Game
                 </div>
               </div>
@@ -67,14 +64,13 @@ class App extends Component {
       let { startNewGame, difficulty } = this.props;
       startNewGame();
       console.log("New Game created, current difficulty: ", difficulty);
-      setTimeout(() => {
-        this.setState((prevState) => {
-          return {
-            gameCounter: prevState.gameCounter + 1,
-            canClickNewGame: true,
-          };
-        });
-      }, 100); // wait 100ms before enabling the button again
+
+      this.setState((prevState) => {
+        return {
+          gameCounter: prevState.gameCounter + 1,
+          canClickNewGame: true,
+        };
+      });
     });
   }
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./styles/numberBubble.scss";
+import "./styles/bubbleRing.scss";
 import { connect } from "react-redux";
 import { onCellChange } from "./redux/actions/actions";
 

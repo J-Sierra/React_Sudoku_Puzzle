@@ -5,70 +5,78 @@
   align-items: $align;
 }
 
+$size: min(75vh, 75vw);
+$primaryBC: #222222;
+$secondaryBC: #ffd500;
+
 .App {
-  text-align: center;
   background-color: white;
+  text-align: center;
 }
 
 .App-Container {
   @include flex();
-  background-color: #222222;
-  min-height: 100vh;
-  font-size: xx-large;
+  background-color: $primaryBC;
   color: white;
-
-
+  font-size: xx-large;
+  height: 100vh;
 }
 
 #Sudoku-Container {
+  align-items: center;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
+  height: $size;
   justify-items: center;
-  align-items: center;
+  width: $size;
 }
 
 .sectors {
+  align-items: center;
   background-color: lightgray;
-  width: 130.1px;
-  height: 128px;
-  position: relative;
-  border: 2px solid black;
-  display: flex;
+  border: 2px solid #222222;
+  display: grid;
   flex-wrap: wrap;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  height: calc($size / 3);
+  justify-items: center;
+  position: relative;
+  width: calc($size / 3);
 }
 
 .Header {
+  align-items: center;
+  backdrop-filter: blur(10px);
+  background-color: $primaryBC;
+  display: flex;
+  height: 50px;
+  justify-content: space-between;
+  left: 0;
+  padding: 10px 50px 0;
   position: fixed;
   right: 0;
-  left: 0;
-  z-index: 999;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 50px 0;
-  height: 50px;
   width: auto;
-  background-color: #222222;
-  backdrop-filter: blur(10px);
+  z-index: 999;
 }
 
 .nav {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
+  color: white;
+  display: flex;
+  height: auto;
+  justify-content: space-between;
   position: relative;
   width: 100%;
-  color: white;
   z-index: 12;
-  height: auto;
 }
 
 .navElements {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
   column-gap: 50px;
+  display: flex;
+  justify-content: space-between;
 }
 
 #logo {
@@ -80,16 +88,20 @@
   color: white;
   cursor: pointer;
 }
-#newGame{
+
+#newGame {
   cursor: pointer;
+
   &:hover {
     color: #ffd500;
   }
 }
-#gameSettingsContainer{
-  @include flex(row,flex-end);
+
+#gameSettingsContainer {
+  @include flex(row, flex-end);
   flex: 2;
-  .navElements:not(:first-child){
+
+  .navElements:not(:first-child) {
     margin-left: 20px;
   }
 }

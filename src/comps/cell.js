@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./styles/cell.scss";
 import { connect } from "react-redux";
 import BubbleRing from "./bubbleRing";
+import CellNote from "./cellNotes";
 
 class Cell extends Component {
   state = {
@@ -29,7 +30,7 @@ class Cell extends Component {
   };
 
   render() {
-    const { editable, number } = this.props.cell;
+    const { editable, number, notes } = this.props.cell;
     const { selected, editing } = this.state;
 
     return (
@@ -39,8 +40,16 @@ class Cell extends Component {
         style={selected ? { backgroundColor: "gray" } : null}
         onClick={this.toggle}
       >
-        {!editing ? number ? number : null : <div id={"cellInput"} />}
+        {!editing ? number : null}
         {editing && <BubbleRing cell={this.props.cell} />}
+
+        <div className={"cellNoteContainer"}>
+          {editable &&
+            editing &&
+            notes.map((note, key) => (
+              <CellNote key={key} note={note}></CellNote>
+            ))}
+        </div>
       </div>
     );
   }

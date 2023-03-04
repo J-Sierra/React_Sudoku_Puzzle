@@ -22,8 +22,6 @@ export default function (state = initialState, { type, payload }) {
       };
     }
     case CELL_CHANGE: {
-      console.log(payload);
-      console.log(state);
       let { cell, content } = payload;
       let { sectorRow, sectorCol } = cell;
       if (content === "x") {
