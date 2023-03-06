@@ -3,6 +3,7 @@ import {
   NEW_GAME,
   SET_DIFFICULTY,
   SET_GAME_BOARD_READY,
+  TOGGLE_NOTE_VISIBILITY,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -24,6 +25,10 @@ export default function (state = initialState, { type, payload }) {
     case CELL_CHANGE: {
       let { cell, content } = payload;
       let { sectorRow, sectorCol } = cell;
+      const clearedNotesArray = [];
+      for (let i = 1; i < 10; i++) {
+        clearedNotesArray.push({ visible: false, cellNoteNumber: i });
+      }
       if (content === "x") {
         return {
           ...state,
@@ -34,6 +39,7 @@ export default function (state = initialState, { type, payload }) {
               {
                 ...state.sectors[sectorRow][sectorCol],
                 number: null,
+                notesArray: clearedNotesArray,
               },
               ...state.sectors[sectorRow].slice(sectorCol + 1),
             ],
@@ -70,6 +76,38 @@ export default function (state = initialState, { type, payload }) {
       return {
         ...state,
         difficulty: payload.difficulty,
+      };
+    }
+    case TOGGLE_NOTE_VISIBILITY: {
+      console.log("Action: TOGGLE_NOTE_VISIBILITY", "Payload: ", payload);
+      const { cell, noteNumber } = payload;
+      const { sectorRow, sectorCol } = cell;
+
+      const updatedNotesArray = state.sectors[sectorRow][
+        sectorCol
+      ].notesArray.map((n) => {
+        if (n.cellNoteNumber === noteNumber) {
+          return {
+            ...n,
+            visible: !n.visible,
+          };
+        }
+        return n;
+      });
+      return {
+        ...state,
+        sectors: [
+          ...state.sectors.slice(0, sectorRow),
+          [
+            ...state.sectors[sectorRow].slice(0, sectorCol),
+            {
+              ...state.sectors[sectorRow][sectorCol],
+              notesArray: updatedNotesArray,
+            },
+            ...state.sectors[sectorRow].slice(sectorCol + 1),
+          ],
+          ...state.sectors.slice(sectorRow + 1),
+        ],
       };
     }
     default: {

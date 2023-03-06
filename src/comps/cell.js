@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./styles/cell.scss";
 import { connect } from "react-redux";
 import BubbleRing from "./bubbleRing";
-import CellNote from "./cellNotes";
+import { CellNote } from "./cellNotes";
 
 class Cell extends Component {
   state = {
@@ -30,7 +30,7 @@ class Cell extends Component {
   };
 
   render() {
-    const { editable, number, notes } = this.props.cell;
+    const { editable, number, notesArray } = this.props.cell;
     const { editing } = this.state;
 
     return (
@@ -45,8 +45,24 @@ class Cell extends Component {
         <div className={"cellNoteContainer"}>
           {editable &&
             editing &&
-            notes.map((note, key) => (
-              <CellNote key={key} note={note}></CellNote>
+            notesArray.map((note, key) => (
+              <CellNote key={key} note={note} cell={this.props.cell}></CellNote>
+            ))}
+        </div>
+        <div className={"cellNoteContainer"}>
+          {!editing &&
+            !number &&
+            this.props.cell.notesArray.map((note) => (
+              <span
+                className={"cellNoteActive"}
+                key={note.cellNoteNumber}
+                style={{
+                  visibility: note.visible ? "visible" : "hidden",
+                  pointerEvents: "none",
+                }}
+              >
+                {note.cellNoteNumber}
+              </span>
             ))}
         </div>
       </div>

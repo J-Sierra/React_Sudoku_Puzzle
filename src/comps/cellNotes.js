@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { toggleNoteVisibility } from "./redux/actions/actions";
 
-const CellNote = (props) => {
-  const [visible, setVisible] = useState(false);
+export function CellNote(props) {
+  const dispatch = useDispatch();
+  const { cell, note } = props;
 
-  const handleClick = () => {
-    setVisible(!visible);
-  };
+  function handleNoteClick() {
+    dispatch(toggleNoteVisibility(cell, note.cellNoteNumber));
+  }
 
   return (
     <div
-      className={visible ? "cellNote active" : "cellNote"}
-      onClick={handleClick}
+      className={note.visible ? "cellNote" : "cellNote"}
+      onClick={handleNoteClick}
     >
-      <span className="cellNoteNumber">{props.note}</span>
+      {note.cellNoteNumber}
     </div>
   );
-};
-
-export default CellNote;
+}

@@ -3,7 +3,7 @@ import {
   CELL_SELECTED,
   SET_GAME_BOARD_READY,
   NEW_GAME,
-  SET_DIFFICULTY,
+  SET_DIFFICULTY, TOGGLE_NOTE_VISIBILITY,
 } from "./actionTypes";
 
 export const setGameboardReadyStatus = (value) => ({
@@ -36,3 +36,12 @@ export const setDifficulty = (difficulty) => ({
     difficulty: difficulty,
   },
 });
+export function toggleNoteVisibility(cell, noteNumber) {
+  return {
+    type: TOGGLE_NOTE_VISIBILITY,
+    payload: {
+      cell,
+      noteNumber,
+    },
+  };
+}

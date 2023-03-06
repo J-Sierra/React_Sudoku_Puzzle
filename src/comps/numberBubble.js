@@ -4,16 +4,17 @@ import { connect } from "react-redux";
 import { onCellChange } from "./redux/actions/actions";
 
 class NumberBubble extends Component {
-  componentDidMount() {
-    //console.log(this.props.cell);
-  }
-
   render() {
     const { cell, number, changeCellNumberFromInput } = this.props;
     //console.log(this.props);
     return (
       <div className="NumberBubble">
-        <div onClick={() => changeCellNumberFromInput(number, cell)}>
+        <div
+          onClick={() => {
+            changeCellNumberFromInput(number, cell);
+            console.log(cell.notesArray);
+          }}
+        >
           {number === null ? "x" : number}
         </div>
       </div>

@@ -59,3 +59,13 @@ $cellSize: calc(calc($size / 3) / 3 - 0.9px);
     color: black;
   }
 }
+.cellNoteActive{
+  align-items: center;
+  color: gray;
+  font-size: calc($size / 33);
+  height: calc(#{$cellSize} / 3);
+  justify-content: center;
+  user-select: none;
+  width: calc(#{$cellSize} / 3);
+
+}

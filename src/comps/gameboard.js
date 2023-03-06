@@ -118,7 +118,10 @@ class Gameboard extends Component {
   createSectors() {
     // Destructure the gameBoard and sectors from the props
     const { gameBoard, sectors } = this.props;
-
+    const notesArray = [];
+    for (let i = 1; i < 10; i++) {
+      notesArray.push({ visible: false, cellNoteNumber: i });
+    }
     // Loop through each cell in the game board
     for (let row = 0; row < 9; row++) {
       for (let col = 0; col < 9; col++) {
@@ -129,6 +132,7 @@ class Gameboard extends Component {
         // Get the value of the current cell
         const cellNumber = gameBoard[row][col];
 
+
         // Create a new object representing the current cell, and add it to the correct sector in the sectors array
         sectors[sectorRow].push({
           number: cellNumber,
@@ -138,7 +142,7 @@ class Gameboard extends Component {
           col,
           selected: false,
           editable: cellNumber === null,
-          notes: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+          notesArray
         });
       }
     }
