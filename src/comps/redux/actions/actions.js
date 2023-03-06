@@ -3,7 +3,9 @@ import {
   CELL_SELECTED,
   SET_GAME_BOARD_READY,
   NEW_GAME,
-  SET_DIFFICULTY, TOGGLE_NOTE_VISIBILITY,
+  SET_DIFFICULTY,
+  TOGGLE_NOTE_VISIBILITY,
+  HANDLE_CELL_SELECTED_HIGHLIGHT,
 } from "./actionTypes";
 
 export const setGameboardReadyStatus = (value) => ({
@@ -42,6 +44,14 @@ export function toggleNoteVisibility(cell, noteNumber) {
     payload: {
       cell,
       noteNumber,
+    },
+  };
+}
+export function handleCellSelectedHighlight(cell) {
+  return {
+    type: HANDLE_CELL_SELECTED_HIGHLIGHT,
+    payload: {
+      cell,
     },
   };
 }

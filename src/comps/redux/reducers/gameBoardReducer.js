@@ -4,6 +4,7 @@ import {
   SET_DIFFICULTY,
   SET_GAME_BOARD_READY,
   TOGGLE_NOTE_VISIBILITY,
+  HANDLE_CELL_SELECTED_HIGHLIGHT,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -115,6 +116,23 @@ export default function (state = initialState, { type, payload }) {
           ...state.sectors.slice(sector + 1),
         ],
       };
+    }
+    case HANDLE_CELL_SELECTED_HIGHLIGHT: {
+      console.log(
+        "Action: HANDLE_CELL_SELECTED_HIGHLIGHT",
+        "Payload: ",
+        payload
+      );
+      const { cell } = payload;
+      const { sector, sectorIndex, row, col } = cell;
+      const updatedRow = [];
+      for (let i = 0; i < 9; i++) {
+        updatedRow.push(
+          state.sectors[Math.floor(row / 3)][Math.floor(row / 3) + row]
+        );
+      }
+      console.log(updatedRow);
+      return state;
     }
     default: {
       return state;

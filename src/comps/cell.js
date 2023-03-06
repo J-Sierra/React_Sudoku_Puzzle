@@ -3,11 +3,11 @@ import "./styles/cell.scss";
 import { connect } from "react-redux";
 import BubbleRing from "./bubbleRing";
 import { CellNote } from "./cellNotes";
+import { handleCellSelectedHighlight } from "./redux/actions/actions";
 
 class Cell extends Component {
   state = {
     editing: false,
-    selected: false,
   };
 
   componentDidMount() {
@@ -46,7 +46,10 @@ class Cell extends Component {
           {editable &&
             editing &&
             notesArray.map((note, key) => (
-              <div style={{ visibility: !number ? "visible" : "hidden" }}>
+              <div
+                style={{ visibility: !number ? "visible" : "hidden" }}
+                key={key}
+              >
                 <CellNote
                   key={key}
                   note={note}
@@ -76,10 +79,10 @@ class Cell extends Component {
   }
 
   toggle = () => {
-    const { cell } = this.props;
-
+    const { cell, handleCellSelectedHighlight } = this.props;
     if (cell.editable) {
       this.setState((prevState) => ({ editing: !prevState.editing }));
+      handleCellSelectedHighlight(cell);
     }
   };
 }
@@ -92,5 +95,10 @@ const mapStateToProps = (state) => {
     gameBoardReady,
   };
 };
-
-export default connect(mapStateToProps, null)(Cell);
+function mapActionsToProps(dispatch) {
+  return {
+    handleCellSelectedHighlight: (cell) =>
+      dispatch(handleCellSelectedHighlight(cell)),
+  };
+}
+export default connect(mapStateToProps, mapActionsToProps)(Cell);
