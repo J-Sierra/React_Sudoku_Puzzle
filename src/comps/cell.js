@@ -46,7 +46,13 @@ class Cell extends Component {
           {editable &&
             editing &&
             notesArray.map((note, key) => (
-              <CellNote key={key} note={note} cell={this.props.cell}></CellNote>
+              <div style={{ visibility: !number ? "visible" : "hidden" }}>
+                <CellNote
+                  key={key}
+                  note={note}
+                  cell={this.props.cell}
+                ></CellNote>
+              </div>
             ))}
         </div>
         <div className={"cellNoteContainer"}>

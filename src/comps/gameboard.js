@@ -6,7 +6,6 @@ import { setGameboardReadyStatus } from "./redux/actions/actions";
 
 class Gameboard extends Component {
   componentDidMount() {
-    console.log(this.props);
     let { gameBoardReady, setGameboardReadyStatus, difficulty } = this.props;
     if (!gameBoardReady) {
       this.initiateGame();
@@ -132,7 +131,6 @@ class Gameboard extends Component {
         // Get the value of the current cell
         const cellNumber = gameBoard[row][col];
 
-
         // Create a new object representing the current cell, and add it to the correct sector in the sectors array
         sectors[sectorRow].push({
           number: cellNumber,
@@ -142,7 +140,7 @@ class Gameboard extends Component {
           col,
           selected: false,
           editable: cellNumber === null,
-          notesArray
+          notesArray,
         });
       }
     }

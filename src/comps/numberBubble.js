@@ -12,7 +12,6 @@ class NumberBubble extends Component {
         <div
           onClick={() => {
             changeCellNumberFromInput(number, cell);
-            console.log(cell.notesArray);
           }}
         >
           {number === null ? "x" : number}

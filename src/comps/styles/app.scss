@@ -51,7 +51,7 @@ $secondaryBC: #ffd500;
   backdrop-filter: blur(10px);
   background-color: $primaryBC;
   display: flex;
-  height: 50px;
+
   justify-content: space-between;
   left: 0;
   padding: 10px 50px 0;
@@ -59,6 +59,7 @@ $secondaryBC: #ffd500;
   right: 0;
   width: auto;
   z-index: 999;
+  border-bottom: 3px solid white;
 
   .nav {
     align-items: center;
@@ -80,7 +81,7 @@ $secondaryBC: #ffd500;
 
   #logo {
     color: #ffd500;
-    font-size: 55px;
+    font-size: calc($size / 8);
   }
 
   #logo strong:hover {
@@ -137,4 +138,38 @@ $secondaryBC: #ffd500;
       background-color: $secondaryBC;
     }
   }
+}
+.socials,
+.emailTo, footer {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  color: white;
+}
+.socials {
+  left: 20px;
+  flex-direction: column;
+  font-size: calc($size / 30);
+  a{
+    color: white;
+  }
+}
+.emailTo {
+  right: 20px;
+  writing-mode: vertical-rl;
+  font-size: calc($size / 50);
+  margin-right: 4px;
+  margin-left: 4px;
+}
+.afterBar {
+  height: calc($size/3);
+  width: 1px;
+  background-color: white;
+}
+footer{
+  font-size: calc($size / 50);
+  right: min(80px, calc($size/6));
 }

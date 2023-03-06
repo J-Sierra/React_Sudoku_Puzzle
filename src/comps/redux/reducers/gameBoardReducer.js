@@ -23,6 +23,7 @@ export default function (state = initialState, { type, payload }) {
       };
     }
     case CELL_CHANGE: {
+      console.log("Action: CELL_CHANGE", "Payload: ", payload);
       let { cell, content } = payload;
       let { sectorRow, sectorCol } = cell;
       const clearedNotesArray = [];
@@ -30,6 +31,11 @@ export default function (state = initialState, { type, payload }) {
         clearedNotesArray.push({ visible: false, cellNoteNumber: i });
       }
       if (content === "x") {
+        console.log(
+          "Action: TOGGLE_NOTE_VISIBILITY",
+          "Clearing cell: ",
+          payload
+        );
         return {
           ...state,
           sectors: [

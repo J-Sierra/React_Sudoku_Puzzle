@@ -3,6 +3,7 @@ import "./comps/styles/app.scss";
 import { connect } from "react-redux";
 import { newGame, setDifficulty } from "./comps/redux/actions/actions";
 import Gameboard from "./comps/gameboard";
+import { AiOutlineGithub, AiOutlineLinkedin } from "react-icons/ai";
 
 class App extends Component {
   state = { gameCounter: 0, canClickNewGame: true };
@@ -52,6 +53,30 @@ class App extends Component {
         </header>
         <div className="App-Container">
           <Gameboard key={this.state.gameCounter} />
+          <div className="socials">
+            <a
+              href="https://www.linkedin.com/in/johnny-sierra/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <AiOutlineLinkedin />
+            </a>
+            <a
+              href="https://github.com/J-Sierra"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <AiOutlineGithub />
+            </a>
+            <div className="afterBar" />
+          </div>
+          <div className="emailTo">
+            <div id="link">https://github.com/J-Sierra/React_Sudoku_Puzzle</div>
+            <div className="afterBar" />
+          </div>
+          <footer>
+            <p>Designed and developed by Johnny Sierra</p>
+          </footer>
         </div>
       </div>
     );

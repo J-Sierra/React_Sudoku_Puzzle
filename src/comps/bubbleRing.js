@@ -9,7 +9,7 @@ class BubbleRing extends Component {
         {Array.from(Array(9).keys()).map((e, i) => (
           <NumberBubble cell={this.props.cell} number={i + 1} key={i} />
         ))}
-        <NumberBubble props={this.props} cell={this.props.cell} number={null} />
+        <NumberBubble props={this.props} cell={this.props.cell} number={"x"} />
       </div>
     );
   }
