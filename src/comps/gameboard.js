@@ -125,21 +125,21 @@ class Gameboard extends Component {
     for (let row = 0; row < 9; row++) {
       for (let col = 0; col < 9; col++) {
         // Calculate the sector row and column for the current cell
-        const sectorRow = Math.floor(col / 3) + Math.floor(row / 3) * 3;
-        const sectorCol = (col % 3) + (row % 3) * 3;
+        const sector = Math.floor(col / 3) + Math.floor(row / 3) * 3;
+        const sectorIndex = (col % 3) + (row % 3) * 3;
 
         // Get the value of the current cell
-        const cellNumber = gameBoard[row][col];
+        const number = gameBoard[row][col];
 
         // Create a new object representing the current cell, and add it to the correct sector in the sectors array
-        sectors[sectorRow].push({
-          number: cellNumber,
-          sectorRow,
-          sectorCol,
+        sectors[sector].push({
+          number,
+          sector,
+          sectorIndex,
           row,
           col,
           selected: false,
-          editable: cellNumber === null,
+          editable: number === null,
           notesArray,
         });
       }

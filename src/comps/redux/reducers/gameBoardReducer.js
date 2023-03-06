@@ -25,7 +25,7 @@ export default function (state = initialState, { type, payload }) {
     case CELL_CHANGE: {
       console.log("Action: CELL_CHANGE", "Payload: ", payload);
       let { cell, content } = payload;
-      let { sectorRow, sectorCol } = cell;
+      let { sector, sectorIndex } = cell;
       const clearedNotesArray = [];
       for (let i = 1; i < 10; i++) {
         clearedNotesArray.push({ visible: false, cellNoteNumber: i });
@@ -39,33 +39,33 @@ export default function (state = initialState, { type, payload }) {
         return {
           ...state,
           sectors: [
-            ...state.sectors.slice(0, sectorRow),
+            ...state.sectors.slice(0, sector),
             [
-              ...state.sectors[sectorRow].slice(0, sectorCol),
+              ...state.sectors[sector].slice(0, sectorIndex),
               {
-                ...state.sectors[sectorRow][sectorCol],
+                ...state.sectors[sector][sectorIndex],
                 number: null,
                 notesArray: clearedNotesArray,
               },
-              ...state.sectors[sectorRow].slice(sectorCol + 1),
+              ...state.sectors[sector].slice(sectorIndex + 1),
             ],
-            ...state.sectors.slice(sectorRow + 1),
+            ...state.sectors.slice(sector + 1),
           ],
         };
       }
       return {
         ...state,
         sectors: [
-          ...state.sectors.slice(0, sectorRow),
+          ...state.sectors.slice(0, sector),
           [
-            ...state.sectors[sectorRow].slice(0, sectorCol),
+            ...state.sectors[sector].slice(0, sectorIndex),
             {
-              ...state.sectors[sectorRow][sectorCol],
+              ...state.sectors[sector][sectorIndex],
               number: content,
             },
-            ...state.sectors[sectorRow].slice(sectorCol + 1),
+            ...state.sectors[sector].slice(sectorIndex + 1),
           ],
-          ...state.sectors.slice(sectorRow + 1),
+          ...state.sectors.slice(sector + 1),
         ],
       };
     }
@@ -87,10 +87,10 @@ export default function (state = initialState, { type, payload }) {
     case TOGGLE_NOTE_VISIBILITY: {
       console.log("Action: TOGGLE_NOTE_VISIBILITY", "Payload: ", payload);
       const { cell, noteNumber } = payload;
-      const { sectorRow, sectorCol } = cell;
+      const { sector, sectorIndex } = cell;
 
-      const updatedNotesArray = state.sectors[sectorRow][
-        sectorCol
+      const updatedNotesArray = state.sectors[sector][
+        sectorIndex
       ].notesArray.map((n) => {
         if (n.cellNoteNumber === noteNumber) {
           return {
@@ -103,16 +103,16 @@ export default function (state = initialState, { type, payload }) {
       return {
         ...state,
         sectors: [
-          ...state.sectors.slice(0, sectorRow),
+          ...state.sectors.slice(0, sector),
           [
-            ...state.sectors[sectorRow].slice(0, sectorCol),
+            ...state.sectors[sector].slice(0, sectorIndex),
             {
-              ...state.sectors[sectorRow][sectorCol],
+              ...state.sectors[sector][sectorIndex],
               notesArray: updatedNotesArray,
             },
-            ...state.sectors[sectorRow].slice(sectorCol + 1),
+            ...state.sectors[sector].slice(sectorIndex + 1),
           ],
-          ...state.sectors.slice(sectorRow + 1),
+          ...state.sectors.slice(sector + 1),
         ],
       };
     }
