@@ -5,6 +5,8 @@
     &:hover {
       width: calc($item-size * 1.1);
       height: calc($item-size * 1.1);
+      color: $secondaryBC;
+      background-color: $primaryBC;
     }
 
     display: block;
@@ -15,7 +17,7 @@
     height: $item-size;
     margin: -($item-size / 2);
 
-    $angle: (360 / $item-count);
+    $angle: calc(360 / $item-count);
     $rot: 125.5;
 
     @for $i from 1 through $item-count {

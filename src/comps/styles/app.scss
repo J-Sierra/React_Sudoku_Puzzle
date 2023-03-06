@@ -5,7 +5,7 @@
   align-items: $align;
 }
 
-$size: min(75vh, 75vw);
+$size: min(60vh, 60vw);
 $primaryBC: #222222;
 $secondaryBC: #ffd500;
 
@@ -90,7 +90,7 @@ $secondaryBC: #ffd500;
 
   #newGame {
     cursor: pointer;
-    font-size: calc($size / 25);
+    font-size: calc($size / 30);
 
     &:hover {
       color: #ffd500;
@@ -100,7 +100,7 @@ $secondaryBC: #ffd500;
   #gameSettingsContainer {
     @include flex(row, flex-end);
     flex: 2;
-    font-size: calc($size / 25);
+    font-size: calc($size / 30);
 
     .navElements:not(:first-child) {
       margin-left: 20px;
@@ -115,8 +115,9 @@ $secondaryBC: #ffd500;
     background-color: transparent;
     border: 2px solid #ffffff;
     color: white;
-    font-size: calc($size / 25);
+    font-size: calc($size / 30);
     padding: 0 2px;
+    border-radius: 5px;
 
     &:hover {
       background-color: $secondaryBC;
@@ -128,7 +129,7 @@ $secondaryBC: #ffd500;
     align-items: center;
     background-color: #222222;
     color: white;
-    font-size: calc($size / 35);
+    font-size: calc($size / 40);
     padding: 2px;
     text-align: center;
 
