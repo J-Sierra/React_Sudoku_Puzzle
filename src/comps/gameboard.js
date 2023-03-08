@@ -140,6 +140,7 @@ class Gameboard extends Component {
           col,
           selected: false,
           editable: number === null,
+          editing: false,
           notesArray,
         });
       }

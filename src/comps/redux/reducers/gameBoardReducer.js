@@ -5,6 +5,7 @@ import {
   SET_GAME_BOARD_READY,
   TOGGLE_NOTE_VISIBILITY,
   HANDLE_CELL_SELECTED_HIGHLIGHT,
+  TOGGLE_CELL_EDITING,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -32,11 +33,7 @@ export default function (state = initialState, { type, payload }) {
         clearedNotesArray.push({ visible: false, cellNoteNumber: i });
       }
       if (content === "x") {
-        console.log(
-          "Action: TOGGLE_NOTE_VISIBILITY",
-          "Clearing cell: ",
-          payload
-        );
+        console.log("Clearing cell: ", payload);
         return {
           ...state,
           sectors: [
@@ -123,17 +120,60 @@ export default function (state = initialState, { type, payload }) {
         "Payload: ",
         payload
       );
-      const { cell } = payload;
-      const { sector, sectorIndex, row, col } = cell;
-      const updatedRow = [];
-      for (let i = 0; i < 9; i++) {
-        updatedRow.push(
-          state.sectors[Math.floor(row / 3)][Math.floor(row / 3) + row]
+      const { cell, selected } = payload;
+      const { row, col, sector } = cell;
+      let selectedSector = state.sectors[sector];
+      let selectedRow = [];
+      let selectedCol = [];
+      const allSelectedCells = [cell];
+      //Add the corresponding row of the selected Cell
+      state.sectors
+        .slice(Math.floor(row / 3) * 3, Math.floor(row / 3) * 3 + 3)
+        .map((sector) =>
+          selectedRow.push(...sector.slice((row % 3) * 3, (row % 3) * 3 + 3))
         );
+      //Add the corresponding col of the selected Cell
+      for (let i = 0; i < 3; i++) {
+        let tempColSectorSlice = state.sectors[Math.floor(col / 3) + i * 3];
+        for (let j = 0; j < 3; j++) {
+          selectedCol.push(
+            tempColSectorSlice.slice(
+              Math.floor(col % 3) + j * 3,
+              Math.floor(col % 3) + j * 3 + 1
+            )[0]
+          );
+        }
       }
-      console.log(updatedRow);
-      return state;
+      [selectedRow, selectedCol, selectedSector].forEach((selectedCells) => {
+        selectedCells.forEach((cell) => {
+          if (
+            !allSelectedCells.some(
+              (selectedCell) =>
+                selectedCell.row === cell.row && selectedCell.col === cell.col
+            )
+          ) {
+            allSelectedCells.push(cell);
+          }
+        });
+      });
+
+      allSelectedCells.forEach((cell) => {
+        cell.selected = selected;
+      });
+
+      return {
+        ...state,
+        sectors: [...state.sectors],
+      };
     }
+
+    case TOGGLE_CELL_EDITING: {
+      console.log("Action: TOGGLE_CELL_EDITING", "Payload: ", payload);
+      const { cell, editing } = payload;
+      cell.editing = editing;
+      return { ...state };
+    }
+
     default: {
       return state;
     }

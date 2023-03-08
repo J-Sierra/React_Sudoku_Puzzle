@@ -69,3 +69,6 @@ $cellSize: calc(calc($size / 3) / 3 - 0.9px);
   width: calc(#{$cellSize} / 3);
 
 }
+.Selected{
+  background-color: $secondaryBC;
+}

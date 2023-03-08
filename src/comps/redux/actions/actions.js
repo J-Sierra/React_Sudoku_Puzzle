@@ -6,6 +6,7 @@ import {
   SET_DIFFICULTY,
   TOGGLE_NOTE_VISIBILITY,
   HANDLE_CELL_SELECTED_HIGHLIGHT,
+  TOGGLE_CELL_EDITING,
 } from "./actionTypes";
 
 export const setGameboardReadyStatus = (value) => ({
@@ -47,11 +48,21 @@ export function toggleNoteVisibility(cell, noteNumber) {
     },
   };
 }
-export function handleCellSelectedHighlight(cell) {
+export function handleCellSelectedHighlight(cell, selected) {
   return {
     type: HANDLE_CELL_SELECTED_HIGHLIGHT,
     payload: {
       cell,
+      selected,
+    },
+  };
+}
+export function toggleEditing(cell, editing) {
+  return {
+    type: TOGGLE_CELL_EDITING,
+    payload: {
+      cell,
+      editing,
     },
   };
 }

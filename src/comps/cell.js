@@ -3,13 +3,15 @@ import "./styles/cell.scss";
 import { connect } from "react-redux";
 import BubbleRing from "./bubbleRing";
 import { CellNote } from "./cellNotes";
-import { handleCellSelectedHighlight } from "./redux/actions/actions";
+import {
+  handleCellSelectedHighlight,
+  toggleEditing,
+} from "./redux/actions/actions";
 
 class Cell extends Component {
   state = {
     editing: false,
   };
-
   componentDidMount() {
     // Add event listener to hide BubbleRing when clicking outside the cell
     document.addEventListener("click", this.handleOutsideClick);
@@ -25,18 +27,21 @@ class Cell extends Component {
     const { editing } = this.state;
     const isClickInsideCell = this.cellRef.contains(target);
     if (editing && !isClickInsideCell) {
+      console.log("toggle off");
       this.setState({ editing: false });
     }
   };
 
   render() {
-    const { editable, number, notesArray } = this.props.cell;
+    const { editable, number, notesArray, selected } = this.props.cell;
     const { editing } = this.state;
 
     return (
       <div
-        ref={(el) => (this.cellRef = el)} // Save a reference to the cell div
-        className={editable ? "cell" : "boldCell"}
+        ref={(el) => (this.cellRef = el)}
+        className={`${editable ? "cell" : "boldCell"}${
+          selected ? " Selected" : ""
+        }`}
         onClick={this.toggle}
       >
         {!editing ? number : null}
@@ -54,6 +59,7 @@ class Cell extends Component {
                   key={key}
                   note={note}
                   cell={this.props.cell}
+                  onClick={(event) => event.stopPropagation()}
                 ></CellNote>
               </div>
             ))}
@@ -69,6 +75,7 @@ class Cell extends Component {
                   visibility: note.visible ? "visible" : "hidden",
                   pointerEvents: "none",
                 }}
+                onClick={(event) => event.stopPropagation()}
               >
                 {note.cellNoteNumber}
               </span>
@@ -79,10 +86,12 @@ class Cell extends Component {
   }
 
   toggle = () => {
-    const { cell, handleCellSelectedHighlight } = this.props;
+    const { cell, handleCellSelectedHighlight, toggleEditing } = this.props;
     if (cell.editable) {
+      console.log("CASE: Cell is empty and editable");
+      toggleEditing(cell, true);
+      handleCellSelectedHighlight(cell, true);
       this.setState((prevState) => ({ editing: !prevState.editing }));
-      handleCellSelectedHighlight(cell);
     }
   };
 }
@@ -97,8 +106,9 @@ const mapStateToProps = (state) => {
 };
 function mapActionsToProps(dispatch) {
   return {
-    handleCellSelectedHighlight: (cell) =>
-      dispatch(handleCellSelectedHighlight(cell)),
+    handleCellSelectedHighlight: (cell, selected) =>
+      dispatch(handleCellSelectedHighlight(cell, selected)),
+    toggleEditing: (cell, editing) => dispatch(toggleEditing(cell, editing)),
   };
 }
 export default connect(mapStateToProps, mapActionsToProps)(Cell);
