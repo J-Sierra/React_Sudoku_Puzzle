@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import "./comps/styles/app.scss";
 import { connect } from "react-redux";
-import { newGame, setDifficulty } from "./comps/redux/actions/actions";
 import Gameboard from "./comps/gameboard";
 import { AiOutlineGithub, AiOutlineLinkedin } from "react-icons/ai";
-
+import { newGame, setDifficulty } from "./comps/redux/SudokuSlice";
 class App extends Component {
   state = { gameCounter: 0, canClickNewGame: true };
 
   render() {
+    const { setDifficulty } = this.props;
     return (
       <div className="App">
         <header className="Header">
@@ -29,7 +29,7 @@ class App extends Component {
                   <label> Difficulty: </label>
                   <select
                     disabled={!this.state.canClickNewGame}
-                    onChange={(e) => this.props.setDifficulty(e.target.value)}
+                    onChange={(e) => setDifficulty(e.target.value)}
                   >
                     <option value={this.getRandomIntegerWithinRange(36, 45)}>
                       Easy
@@ -87,8 +87,8 @@ class App extends Component {
       return;
     }
     this.setState({ canClickNewGame: false }, () => {
-      let { startNewGame, difficulty } = this.props;
-      startNewGame();
+      let { newGame, difficulty } = this.props;
+      newGame();
       console.log("New Game created, current difficulty: ", difficulty);
 
       this.setState((prevState) => {
@@ -109,15 +109,10 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  ...state.gameBoardReducer,
-});
+const mapStateToProps = (state) => state.sudoku;
+const mapDispatchToProps = {
+  newGame,
+  setDifficulty,
+};
 
-function mapActionsToProps(dispatch) {
-  return {
-    startNewGame: () => dispatch(newGame()),
-    setDifficulty: (difficulty) => dispatch(setDifficulty(difficulty)),
-  };
-}
-
-export default connect(mapStateToProps, mapActionsToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

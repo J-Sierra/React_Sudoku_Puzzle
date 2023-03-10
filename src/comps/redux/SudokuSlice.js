@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import gameboard from "../gameboard";
+import produce from "immer";
 
 const initialState = {
   gameBoard: [],
@@ -11,8 +13,18 @@ export const sudokuSlice = createSlice({
   name: "sudoku",
   initialState,
   reducers: {
+    initiateGame: (state) => {
+      console.log("Action: Initiate game");
+      // Populate gameBoard and sectors arrays with 9 empty sub-arrays each
+      for (let i = 0; i < 9; i++) {
+        state.gameBoard.push(Array(9).fill(null));
+        state.sectors.push([]);
+      }
+      console.log(state.gameBoard);
+    },
     setGameboardReadyStatus: (state, action) => {
-      state.gameBoardReady = action.payload.value;
+      console.log("Action: Set Game Board Ready Status");
+      state.gameBoardReady = action.payload.gameBoardReady;
     },
     onCellChange: (state, { payload }) => {
       console.log("Action: CELL_CHANGE", "Payload: ", payload);
@@ -35,6 +47,12 @@ export const sudokuSlice = createSlice({
           number: content,
         };
       }
+    },
+    updateGameBoard: (state, action) => {
+      console.log("Action: Update Game Board");
+      const { tempGameBoard } = action.payload;
+      state.gameBoard = tempGameBoard;
+      console.log("Test: Temp Game Board", action);
     },
     newGame: (state) => {
       console.log("Resetting state");
@@ -149,5 +167,7 @@ export const {
   newGame,
   setDifficulty,
   toggleNoteVisibility,
+  initiateGame,
+  updateGameBoard,
 } = sudokuSlice.actions;
 export default sudokuSlice.reducer;

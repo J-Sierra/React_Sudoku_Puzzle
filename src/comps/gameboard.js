@@ -2,13 +2,19 @@ import React, { Component } from "react";
 import "./styles/app.scss";
 import Sector from "./sector";
 import { connect } from "react-redux";
-import { setGameboardReadyStatus } from "./redux/actions/actions";
+import {
+  initiateGame,
+  setGameboardReadyStatus,
+  updateGameBoard,
+} from "./redux/SudokuSlice";
 
 class Gameboard extends Component {
   componentDidMount() {
-    let { gameBoardReady, setGameboardReadyStatus, difficulty } = this.props;
+    let { gameBoardReady, setGameboardReadyStatus, difficulty, initiateGame } =
+      this.props;
+    console.log(this.props);
     if (!gameBoardReady) {
-      this.initiateGame();
+      initiateGame();
       this.generateNumbers();
       this.setDifficulty(difficulty);
       this.createSectors();
@@ -29,46 +35,29 @@ class Gameboard extends Component {
     );
   }
 
-  //Starts the process of making the game board of 3x3 sectors each containing 3x3 of cells.
-  initiateGame() {
-    // Retrieve gameBoard and sectors arrays from Redux store
-    const { gameBoard, sectors } = this.props;
-
-    // Populate gameBoard and sectors arrays with 9 empty sub-arrays each
-    for (let i = 1; i < 10; i++) {
-      gameBoard.push([]);
-      sectors.push([]);
-    }
-
-    // Populate each sub-array of gameBoard with 9 null values
-    gameBoard.forEach((region) => {
-      for (let i = 0; i < 9; i++) {
-        region.push(null);
-      }
-    });
-  }
-
-  //
   generateNumbers() {
-    const { gameBoard } = this.props;
-
+    const { gameBoard, updateGameBoard } = this.props;
+    const tempGameBoard = gameBoard;
+    console.log(this.props);
     //Cycles through each cell to find a number that works for Sudoku
-    for (let row = 0; row < gameBoard.length; row++) {
-      for (let col = 0; col < gameBoard[row].length; col++) {
+    for (let row = 0; row < tempGameBoard.length; row++) {
+      for (let col = 0; col < tempGameBoard[row].length; col++) {
         // Get a number that doesn't conflict with existing numbers in the row, column, and sector
         let num = this.getANoNConflictingNumber(row, col);
         // If the number returned is 0, reset the row and restart generating numbers for the row
         if (num === 0) {
-          gameBoard.splice(row, 1, [0, 0, 0, 0, 0, 0, 0, 0, 0]);
+          tempGameBoard.splice(row, 1, [0, 0, 0, 0, 0, 0, 0, 0, 0]);
           col = 0;
           row--;
           break;
         } else {
           // Place the non-conflicting number in the current cell of the game board
-          gameBoard[row].splice(col, 1, num);
+          tempGameBoard[row].splice(col, 1, num);
         }
       }
     }
+    console.log(tempGameBoard);
+    updateGameBoard(tempGameBoard);
   }
 
   //Attempts to find a number that does not conflict with any other number in row, column, or sector
@@ -154,6 +143,8 @@ class Gameboard extends Component {
   setDifficulty(difficulty) {
     const { gameBoard } = this.props;
 
+    const tempGameBoard = gameBoard;
+
     let randRow = null;
     let randCol = null;
 
@@ -165,8 +156,8 @@ class Gameboard extends Component {
 
       //If the random cell contains a number, change that cell value to null
       //else, set back the loop counter by 1 and try again
-      if (gameBoard[randRow][randCol]) {
-        gameBoard[randRow].splice(randCol, 1, null);
+      if (tempGameBoard[randRow][randCol]) {
+        tempGameBoard[randRow].splice(randCol, 1, null);
       } else {
         i--;
       }
@@ -184,14 +175,18 @@ class Gameboard extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  ...state.gameBoardReducer,
-});
-
-function mapActionsToProps(dispatch) {
+const mapStateToProps = (state) => {
+  console.log(state.sudoku.gameBoard);
   return {
-    setGameboardReadyStatus: (value) =>
-      dispatch(setGameboardReadyStatus(value)),
+    gameBoard: state.sudoku.gameBoard,
+  };
+};
+function mapActionsToProps(dispatch) {
+  //setGameboardReadyStatus,
+  //initiateGame,
+  //updateGameBoard,
+  return {
+    initiateGame: () => dispatch(initiateGame()),
   };
 }
 
