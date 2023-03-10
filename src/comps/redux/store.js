@@ -1,9 +1,10 @@
-import {createStore} from "redux";
-import Reducers from "./reducers";
+import { configureStore } from "@reduxjs/toolkit";
+import sudokuReducer from "./SudokuSlice";
 
-const store = createStore(
-    Reducers,
-    window.devToolsExtension && window.devToolsExtension()
-);
+const store = configureStore({
+  reducer: {
+    sudoku: sudokuReducer,
+  },
+});
 
-export default store
+export default store;

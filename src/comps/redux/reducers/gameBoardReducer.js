@@ -125,7 +125,7 @@ export default function (state = initialState, { type, payload }) {
       let selectedSector = state.sectors[sector];
       let selectedRow = [];
       let selectedCol = [];
-      const allSelectedCells = [cell];
+      const allSelectedCells = [];
       //Add the corresponding row of the selected Cell
       state.sectors
         .slice(Math.floor(row / 3) * 3, Math.floor(row / 3) * 3 + 3)
@@ -170,8 +170,17 @@ export default function (state = initialState, { type, payload }) {
     case TOGGLE_CELL_EDITING: {
       console.log("Action: TOGGLE_CELL_EDITING", "Payload: ", payload);
       const { cell, editing } = payload;
-      cell.editing = editing;
-      return { ...state };
+      const { sector, sectorIndex } = cell;
+      const updatedSectors = [...state.sectors];
+
+      updatedSectors[sector][sectorIndex] = {
+        ...updatedSectors[sector][sectorIndex],
+        editing,
+      };
+      return {
+        ...state,
+        sectors: updatedSectors,
+      };
     }
 
     default: {
