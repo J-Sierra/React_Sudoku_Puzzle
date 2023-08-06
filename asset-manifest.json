@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/React_Sudoku_Puzzle/static/css/main.6ab162aa.css",
-    "main.js": "/React_Sudoku_Puzzle/static/js/main.472ffd71.js",
+    "main.css": "/React_Sudoku_Puzzle/static/css/main.0137f486.css",
+    "main.js": "/React_Sudoku_Puzzle/static/js/main.db41e2f7.js",
     "index.html": "/React_Sudoku_Puzzle/index.html",
-    "main.6ab162aa.css.map": "/React_Sudoku_Puzzle/static/css/main.6ab162aa.css.map",
-    "main.472ffd71.js.map": "/React_Sudoku_Puzzle/static/js/main.472ffd71.js.map"
+    "main.0137f486.css.map": "/React_Sudoku_Puzzle/static/css/main.0137f486.css.map",
+    "main.db41e2f7.js.map": "/React_Sudoku_Puzzle/static/js/main.db41e2f7.js.map"
   },
   "entrypoints": [
-    "static/css/main.6ab162aa.css",
-    "static/js/main.472ffd71.js"
+    "static/css/main.0137f486.css",
+    "static/js/main.db41e2f7.js"
   ]
 }
