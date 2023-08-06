@@ -4,7 +4,7 @@ React Sudoku Puzzle is a web application that allows users to play Sudoku online
 
 ## Demo
 
-You can try out the live demo of this project at [insert link to live demo].
+You can try out the live demo of this project at https://j-sierra.github.io/React_Sudoku_Puzzle/.
 
 ## Technologies
 
@@ -13,6 +13,8 @@ This project was built with:
 * React
 * CSS
 * HTML
+* React Redux
+* SASS
 
 ## Installation
 To install and run the application locally, follow these steps:

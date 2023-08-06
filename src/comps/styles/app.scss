@@ -85,8 +85,7 @@ $secondaryBC: #ffd500;
   }
 
   #logo strong:hover {
-    color: white;
-    cursor: pointer;
+    cursor: default;
   }
 
   #newGame {
@@ -140,7 +139,7 @@ $secondaryBC: #ffd500;
   }
 }
 .socials,
-.emailTo, footer {
+.githubRepo, footer {
   position: fixed;
   bottom: 0;
   display: flex;
@@ -157,12 +156,16 @@ $secondaryBC: #ffd500;
     color: white;
   }
 }
-.emailTo {
+.githubRepo {
   right: 20px;
   writing-mode: vertical-rl;
   font-size: calc($size / 50);
   margin-right: 4px;
   margin-left: 4px;
+  cursor: pointer;
+}
+.githubRepo:hover{
+  color: #ffd500;
 }
 .afterBar {
   height: calc($size/3);

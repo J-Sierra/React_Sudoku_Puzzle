@@ -3,7 +3,7 @@ import "./comps/styles/app.scss";
 import { connect } from "react-redux";
 import { newGame, setDifficulty } from "./comps/redux/actions/actions";
 import Gameboard from "./comps/gameboard";
-import { AiOutlineGithub, AiOutlineLinkedin } from "react-icons/ai";
+import { AiOutlineGithub } from "react-icons/ai";
 
 class App extends Component {
   state = { gameCounter: 0, canClickNewGame: true };
@@ -14,14 +14,7 @@ class App extends Component {
         <header className="Header">
           <nav className="nav">
             <div id="logo">
-              <strong
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.location.replace("/#");
-                }}
-              >
-                Sudoku
-              </strong>
+              <strong>Sudoku</strong>
             </div>
             <div id={"gameSettingsContainer"}>
               <div className="navElements">
@@ -55,14 +48,7 @@ class App extends Component {
           <Gameboard key={this.state.gameCounter} />
           <div className="socials">
             <a
-              href="https://www.linkedin.com/in/johnny-sierra/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <AiOutlineLinkedin />
-            </a>
-            <a
-              href="https://github.com/J-Sierra"
+              href="https://github.com/J-Sierra/React_Sudoku_Puzzle"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -70,12 +56,32 @@ class App extends Component {
             </a>
             <div className="afterBar" />
           </div>
-          <div className="emailTo">
-            <div id="link">https://github.com/J-Sierra/React_Sudoku_Puzzle</div>
+          <div className="githubRepo">
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() =>
+                window.open("https://www.johnnysierra.com/", "_blank")
+              }
+              id="link"
+            >
+              JohnnySierra.com
+            </div>
             <div className="afterBar" />
           </div>
           <footer>
-            <p>Designed and developed by Johnny Sierra</p>
+            <p>
+              Designed and developed by
+              <span
+                style={{ cursor: "pointer", color: "#ffd500" }}
+                onClick={() =>
+                  window.open("https://www.johnnysierra.com/", "_blank")
+                }
+                id="link"
+              >
+                {" "}
+                Johnny Sierra
+              </span>
+            </p>
           </footer>
         </div>
       </div>
